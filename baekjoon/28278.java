@@ -1,51 +1,34 @@
 import java.io.*;
-import java.util.*;
+import java.util.Stack;
 
-class Main {
+public class Main {
+
+    static Stack<Integer> stack = new Stack<>();
+    static StringBuilder sb = new StringBuilder();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuffer sb = new StringBuffer();
-        Stack<Integer> stack = new Stack<>();
-        int N = Integer.parseInt(st.nextToken());
 
-        for(int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            switch(Integer.parseInt(st.nextToken())) {
-                case(1):
-                    stack.push(Integer.parseInt(st.nextToken()));
-                    break;
-                case(2):
-                    if(stack.isEmpty()) {
-                        sb.append(-1 + "\n");
-                        break;
-                    } else {
-                        sb.append(stack.pop() + "\n");
-                        break;
-                    }
-                case(3):
-                    sb.append(stack.size() + "\n");
-                    break;
-                case(4):
-                    if(stack.isEmpty()) {
-                        sb.append(1 + "\n");
-                        break;
-                    } else {
-                        sb.append(0 + "\n");
-                        break;
-                    }
-                case(5):
-                    if(stack.isEmpty()) {
-                        sb.append(-1 + "\n");
-                        break;
-                    } else {
-                        sb.append(stack.peek() + "\n");
-                        break;
-                    }
-            }
+        int N = Integer.parseInt(br.readLine()); //명령어의 수
+
+        while(N --> 0){
+            solution(br.readLine());
         }
-        System.out.print(sb);
+
+        br.close();
+
+        System.out.println(sb);
+    }
+
+    static void solution(String input){
+        char c = input.charAt(0);
+
+        switch (c){
+            case '1' : stack.push(Integer.parseInt(input.substring(2))); return;
+            case '2' : sb.append(stack.isEmpty() ? -1 : stack.pop()).append("\n"); return;
+            case '3' : sb.append(stack.size()).append("\n"); return;
+            case '4' : sb.append(stack.isEmpty() ? 1 : 0).append("\n"); return;
+            case '5' : sb.append(stack.isEmpty() ? -1 : stack.peek()).append("\n"); return;
+            default: break;
+        }
     }
 }
-
-// 스택 2
