@@ -8,28 +8,30 @@ class Main {
         int K = Integer.parseInt(st.nextToken());
         int N = Integer.parseInt(st.nextToken());
         int[] lines = new int[K];
-        long max = 0, min = 0, mid = 0;
+        long right = 0, left = 1, mid = 0;
+        long result = 0;
         for(int i = 0; i < K; i++) {
             lines[i] = Integer.parseInt(br.readLine());
-            if(lines[i] > max) {
-                max = lines[i];
+            if(lines[i] > right) {
+                right = lines[i];
             }
         }
-        max++;
-        while(min < max) {
+
+        while(left <= right) {
             long count = 0;
-            mid = (max + min) / 2;
+            mid = (right + left) / 2;
             for(int line : lines) {
                 count += (line / mid);
             }
 
             if(count < N) {
-                max = mid;
+                right = mid - 1;
             } else {
-                min = mid + 1;
+                result = mid;
+                left = mid + 1;
             }
         }
 
-        System.out.println(min-1);
+        System.out.println(result);
     }
 }
