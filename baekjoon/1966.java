@@ -14,29 +14,38 @@ class Main {
         StringBuffer sb = new StringBuffer();
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int t = Integer.parseInt(br.readLine());
-        StringTokenizer st;
 
         for(int x = 0 ; x < t; x++) {
-            st = new StringTokenizer(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
             int n = Integer.parseInt(st.nextToken());
             int m = Integer.parseInt(st.nextToken());
-            PriorityQueue<Doc> pQueue = new PriorityQueue<>(new Comparator<Doc>() {
-                @Override
-                public int compare(Doc o1, Doc o2) {
-                    return o2.priority - o1.priority;
-                }
-            });
+            LinkedList<Doc> queue = new LinkedList<>();
             st = new StringTokenizer(br.readLine());
+
             for(int i = 0; i < n; i++) {
-                pQueue.offer(new Doc(i, Integer.parseInt(st.nextToken())));
+                queue.offer(new Doc(i, Integer.parseInt(st.nextToken())));
             }
+
             int count = 0;
-            while(!pQueue.isEmpty()) {
-                Doc d = pQueue.poll();
-                count++;
-                if(d.index == m) {
-                    sb.append(count).append("\n");
-                    break;
+            while(!queue.isEmpty()) {
+                Doc d = queue.poll();
+                boolean isHighestPriority = true;
+
+                for (Doc doc : queue) {
+                    if (doc.priority > d.priority) {
+                        isHighestPriority = false;
+                        break;
+                    }
+                }
+
+                if (!isHighestPriority) {
+                    queue.offer(d);
+                } else {
+                    count++;
+                    if(d.index == m) {
+                        sb.append(count).append("\n");
+                        break;
+                    }
                 }
             }
         }
