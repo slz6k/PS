@@ -8,25 +8,21 @@ class Main {
         int n = Integer.parseInt(st.nextToken());
         int k = Integer.parseInt(st.nextToken());
 
-        Deque<Integer> dq = new ArrayDeque<>();
+        LinkedList<Integer> q = new LinkedList<>();
         for(int i = 1; i <= n; i++) {
-            dq.add(i);
-        }
-
-        List<Integer> list = new ArrayList<>();
-        while(dq.size() > 0) {
-            for(int i = 0 ; i < k-1; i++) {
-                dq.add(dq.poll());
-            }
-            list.add(dq.poll());
+            q.add(i);
         }
 
         StringBuilder sb = new StringBuilder();
         sb.append('<');
-        for(int i = 0; i < n-1; i++) {
-            sb.append(list.get(i)).append(", ");
+
+        int index = 0;
+        while(q.size() > 1) {
+            index = (index + k - 1) % q.size();
+            sb.append(q.remove(index)).append(", ");
         }
-        sb.append(list.get(n-1)).append(">");
+
+        sb.append(q.remove(0)).append(">");
 
         System.out.print(sb);
     }
